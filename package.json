@@ -1,0 +1,23 @@
+{
+  "name": "backend-only",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./index.js",
+    "pug:prettier": "./node_modules/.bin/prettier --write \"**/*.pug\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pug": "^3.0.0"
+  },
+  "devDependencies": {
+    "@prettier/plugin-pug": "^1.13.2",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.2.1"
+  }
+}
