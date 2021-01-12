@@ -1,0 +1,25 @@
+extends shared/login-shared
+
+block content
+  .wrapper.fadeInDown
+    #formContent
+      .fadeIn.first
+        img#icon(src="/images/user.svg", alt="User icon")
+      form(method="post")
+        input#login.fadeIn.second(
+          type="text",
+          name="login",
+          placeholder="Username or email",
+          value=login
+          required=""
+        )
+        input#password.fadeIn.third(
+          type="password",
+          name="password",
+          placeholder="Password",
+          required=""
+        )
+        p.errorMessage #{errorMessage}
+        input.fadeIn.fourth(type="submit", value="Login")
+        #formFooter
+          a.underlineHover(href="/register") Not have an account? Sign Up here.
