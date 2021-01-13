@@ -10,6 +10,14 @@ html(lang="en")
       integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2",
       crossorigin="anonymous"
     )
+    link(
+      link,
+      rel="stylesheet",
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css",
+      integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==",
+      crossorigin="anonymous"
+    )
+    link(rel="stylesheet", href="/css/main.css")
 
     //- link(
     //-   rel="stylesheet",
@@ -18,7 +26,32 @@ html(lang="en")
 
     title= title
   body
-    block content
+    .wrapper
+      .row.justify-content-center
+        .col-10.col-md-5
+          nav.navbar.navbar-fixed-top
+            a(href="/")
+              i.fas.fa-smile-wink
+            a(href="/")
+              i.fas.fa-home        
+            a(href="/notifications")
+              i.fab.fa-hornbill
+            a(href="/search")
+              i.fas.fa-search      
+            a(href="/profile")
+              i.fas.fa-user-ninja
+            a(href="/messages")
+              i.fas.fa-envelope-open-text
+            a(href="/logout")
+              i.fas.fa-sign-out-alt
+        .col-2
+      .row.justify-content-center 
+        .mainSectionContainer.col-10.col-md-5
+          .titleContainer
+            h1 #{pageTitle} title
+          block content
+        .col-2
+          span third column
 
     script(
       src="https://code.jquery.com/jquery-3.5.1.min.js",

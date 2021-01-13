@@ -7,6 +7,7 @@ require("dotenv").config();
 const { requireLogin } = require("./src/middlewares");
 const loginRoute = require("./src/routes/loginRoutes");
 const registerRoute = require("./src/routes/registerRoutes");
+const logoutRoute = require("./src/routes/logoutRoutes");
 const { connectMongoDb } = require("./src/utils/connectMongo");
 
 connectMongoDb();
@@ -29,12 +30,14 @@ app.use(
 
 app.use("/login", loginRoute);
 app.use("/register", registerRoute);
+app.use("/logout", logoutRoute);
 
 const server = app.listen(port, () =>
   console.log("Server is up on port " + port)
 );
 
-app.get("/", requireLogin, (req, res) => {
+// app.get("/", requireLogin, (req, res) => {
+app.get("/", (req, res) => {
   const payload = {
     message: "Hey",
     userLoggedIn: req.session.user

@@ -6,32 +6,32 @@ block content
       .fadeIn.first
         img#icon(src="/images/users.svg", alt="Users icon")
       form(method="post")
-        input#login.fadeIn.second(
+        input#firstName.fadeIn.second(
           type="text",
           name="firstName",
           placeholder="First name",
-          value=firstName
+          value=firstName,
           required=""
         )
-        input#login.fadeIn.second(
+        input#lastName.fadeIn.second(
           type="text",
           name="lastName",
           placeholder="Last name",
-          value=lastName
+          value=lastName,
           required=""
         )
-        input#login.fadeIn.second(
+        input#username.fadeIn.second(
           type="text",
           name="username",
           placeholder="Username",
-          value=username
+          value=username,
           required=""
         )
-        input#login.fadeIn.second(
+        input#email.fadeIn.second(
           type="email",
           name="email",
           placeholder="Email",
-          value=email
+          value=email,
           required=""
         )
         input#password.fadeIn.third(
@@ -40,7 +40,7 @@ block content
           placeholder="Password",
           required=""
         )
-        input#password.fadeIn.third(
+        input#confirmPassword.fadeIn.third(
           type="password",
           name="confirmPassword",
           placeholder="Confirm password",
