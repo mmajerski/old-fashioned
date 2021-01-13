@@ -8,6 +8,7 @@ const { requireLogin } = require("./src/middlewares");
 const loginRoute = require("./src/routes/loginRoutes");
 const registerRoute = require("./src/routes/registerRoutes");
 const logoutRoute = require("./src/routes/logoutRoutes");
+const posts = require("./src/routes/api/posts");
 const { connectMongoDb } = require("./src/utils/connectMongo");
 
 connectMongoDb();
@@ -31,16 +32,16 @@ app.use(
 app.use("/login", loginRoute);
 app.use("/register", registerRoute);
 app.use("/logout", logoutRoute);
+app.use("/api/posts", posts);
 
 const server = app.listen(port, () =>
   console.log("Server is up on port " + port)
 );
 
-// app.get("/", requireLogin, (req, res) => {
-app.get("/", (req, res) => {
+app.get("/", requireLogin, (req, res) => {
   const payload = {
     message: "Hey",
-    userLoggedIn: req.session.user
+    loggedInUser: req.session.user
   };
 
   res.render("main", payload);

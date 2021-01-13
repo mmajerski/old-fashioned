@@ -26,10 +26,10 @@ const userSchema = new Schema(
       trim: true,
       unique: true
     },
-    password: { type: String, required: true },
+    password: { type: String, required: true, select: false },
     profilePhoto: {
       type: String,
-      default: "images/profilePhoto.png"
+      default: "images/user.svg"
     }
   },
   {

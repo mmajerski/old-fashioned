@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
     try {
       const user = await User.findOne({
         $or: [{ username: trimmedLogin }, { email: trimmedLogin }]
-      });
+      }).select("+password");
       if (!user) {
         return res.status(400).render("login", {
           ...req.body,

@@ -1,0 +1,8 @@
+mixin createPostForm(loggedInUser) 
+  .postFormContainer  
+    .userPhotoContainer
+      img(src=loggedInUser.profilePhoto, alt="User image")
+    .textareaContainer
+      textarea#postTextarea(placeholder="Share your story!")
+      .buttonsContainer
+        button#submitPostButton(disabled="") Send
