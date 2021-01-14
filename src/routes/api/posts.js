@@ -7,10 +7,15 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const posts = await Post.find().populate("addedBy").sort({ createdAt: 1 });
-    // const populatedPosts = await User.populate(posts, { path: "addedBy" });
+    const posts = await Post.find()
+      .populate("addedBy")
+      .populate("bumpData")
+      .sort({ createdAt: 1 });
+    const populatedPosts = await User.populate(posts, {
+      path: "bumpData.addedBy"
+    });
 
-    return res.status(200).send(posts);
+    return res.status(200).send(populatedPosts);
   } catch (error) {
     console.log(error);
     return res.status(500).send(error.message);
@@ -31,6 +36,43 @@ router.post("/", async (req, res, next) => {
     const newPost = await postData.save();
     const populatedWithUser = await User.populate(newPost, { path: "addedBy" });
     return res.status(201).send(populatedWithUser);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error.message);
+  }
+});
+
+router.post("/:postId/bump", async (req, res, next) => {
+  const { postId } = req.params;
+  const userId = req.session.user._id;
+
+  try {
+    const bumpedPost = await Post.findOneAndDelete({
+      addedBy: userId,
+      bumpData: postId
+    });
+
+    if (!bumpedPost) {
+      const bumped = await Post.create({ addedBy: userId, bumpData: postId });
+
+      req.session.user = await User.findByIdAndUpdate(
+        userId,
+        {
+          $addToSet: { bumpes: bumped._id }
+        },
+        { new: true }
+      );
+
+      const post = await Post.findByIdAndUpdate(
+        postId,
+        {
+          $addToSet: { bumpUsers: userId }
+        },
+        { new: true }
+      );
+
+      return res.status(200).send(post);
+    }
   } catch (error) {
     console.log(error);
     return res.status(500).send(error.message);

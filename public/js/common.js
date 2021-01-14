@@ -19,6 +19,30 @@ $("#submitPostButton").click((e) => {
   });
 });
 
+$(document).on("click", ".bumpButton", (e) => {
+  const postId = extractPostId($(e.target));
+
+  if (!postId) {
+    return;
+  }
+
+  $.ajax({
+    url: `/api/posts/${postId}/bump`,
+    type: "POST",
+    success: (postData) => {
+      $(e.target)
+        .find("span")
+        .text(postData.bumpUsers.length || "");
+
+      if (postData.bumpUsers.includes(loggedInUser._id)) {
+        $(e.target).addClass("hasBumped");
+      } else {
+        $(e.target).removeClass("hasBumped");
+      }
+    }
+  });
+});
+
 $(document).on("click", ".alienButton", (e) => {
   const postId = extractPostId($(e.target));
 
@@ -44,13 +68,30 @@ $(document).on("click", ".alienButton", (e) => {
 });
 
 const createPostTemplate = (postData) => {
+  const bumpedBy = postData.bumpData ? postData.addedBy.username : null;
+  postData = postData.bumpData ? postData.bumpData : postData;
+
   const timestamp = timeDifference(new Date(), new Date(postData.createdAt));
 
   const alienButtonActive = postData.aliens.includes(loggedInUser._id)
     ? "hasAliened"
     : "";
 
+  const bumpedButtonActive = postData.bumpUsers.includes(loggedInUser._id)
+    ? "hasBumped"
+    : "";
+
   return `<div class="post" data-id="${postData._id}">
+    <div class="additionalContainer">
+      ${
+        bumpedBy
+          ? `<span>
+            <i class="fas fa-exclamation"></i>
+            Bumped by <a href="/profile/${postData.addedBy.username}">${postData.addedBy.username}</a>
+          </span>`
+          : ""
+      }
+    </div>
     <div class="mainContentContainer">
       <div class="userPhotoContainer">
         <img src="${postData.addedBy.profilePhoto}" />
@@ -73,8 +114,9 @@ const createPostTemplate = (postData) => {
             </button>
           </div>
           <div class="postButtonContainer orange">
-            <button class="replied">
-              <i class="far fa-comment-dots"></i>
+            <button class="bumpButton ${bumpedButtonActive}">
+              <i class="fas fa-level-up-alt"></i>
+              <span>${postData.bumpUsers.length || ""}</span>
             </button>
           </div>
           <div class="postButtonContainer blue">

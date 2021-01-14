@@ -31,7 +31,8 @@ const userSchema = new Schema(
       type: String,
       default: "images/user.svg"
     },
-    aliens: [{ type: Schema.Types.ObjectId, ref: "Post" }]
+    aliens: [{ type: Schema.Types.ObjectId, ref: "Post" }],
+    bumpes: [{ type: Schema.Types.ObjectId, ref: "Post" }]
   },
   {
     timestamps: true

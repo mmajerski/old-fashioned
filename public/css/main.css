@@ -197,3 +197,14 @@ nav a i {
 .postButtonContainer.blue button.hasAliened {
   color: #2549ec;
 }
+
+.postButtonContainer.orange button.hasBumped {
+  color: #f37c0d;
+}
+
+.additionalContainer {
+  padding-left: 35px;
+  font-size: 0.8rem;
+  color: #a3a2a2;
+  margin-bottom: 5px;
+}
