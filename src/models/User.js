@@ -30,7 +30,8 @@ const userSchema = new Schema(
     profilePhoto: {
       type: String,
       default: "images/user.svg"
-    }
+    },
+    aliens: [{ type: Schema.Types.ObjectId, ref: "Post" }]
   },
   {
     timestamps: true

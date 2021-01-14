@@ -41,7 +41,8 @@ const server = app.listen(port, () =>
 app.get("/", requireLogin, (req, res) => {
   const payload = {
     message: "Hey",
-    loggedInUser: req.session.user
+    loggedInUser: req.session.user,
+    loggedInUserForJs: JSON.stringify(req.session.user)
   };
 
   res.render("main", payload);

@@ -3,4 +3,6 @@ extends shared/main-shared.pug
 block content
   +createPostForm(loggedInUser)
   .postsContainer
-  
+
+block scripts
+  script(src="/js/main.js")

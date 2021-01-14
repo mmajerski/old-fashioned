@@ -24,6 +24,11 @@ button {
   color: var(--lightGreyBorder);
 }
 
+button i,
+button span {
+  pointer-events: none;
+}
+
 a {
   color: inherit;
 }
@@ -125,6 +130,11 @@ nav a i {
   background-color: #dedede;
 }
 
+.postsContainer {
+  overflow-y: scroll;
+  max-height: 400px;
+}
+
 .post {
   display: flex;
   flex-direction: column;
@@ -182,4 +192,8 @@ nav a i {
   background-color: #c1c1c1;
   color: var(--lightBlack);
   border-radius: 50%;
+}
+
+.postButtonContainer.blue button.hasAliened {
+  color: #2549ec;
 }

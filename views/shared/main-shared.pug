@@ -30,6 +30,8 @@ html(lang="en")
 
     title= title
   body
+    script.
+      const loggedInUser =  !{loggedInUserForJs};
     .wrapper
       .row.justify-content-center
         .col-10.col-md-5
@@ -71,4 +73,7 @@ html(lang="en")
     //- The integrity and crossorigin attributes are used for Subresource Integrity (SRI) checking. 
     //- This allows browsers to ensure that resources hosted on third-party servers have not been tampered with.
     //- -->
+
+    block scripts
+
     script(src="/js/common.js")
