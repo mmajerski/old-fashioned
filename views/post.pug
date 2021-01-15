@@ -1,10 +1,11 @@
 extends shared/main-shared.pug
 
 block content
-  +createPostForm(loggedInUser)
+  script.
+    const postId = "!{postId}"
   .postsContainer
 
   +createPostModals(loggedInUser)
 
 block scripts
-  script(src="/js/main.js")
+  script(src="/js/postFront.js")

@@ -7,15 +7,50 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const posts = await Post.find()
-      .populate("addedBy")
-      .populate("bumpData")
-      .sort({ createdAt: 1 });
-    const populatedPosts = await User.populate(posts, {
-      path: "bumpData.addedBy"
-    });
+    const posts = await getPosts();
+    return res.status(200).send(posts);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error.message);
+  }
+});
 
-    return res.status(200).send(populatedPosts);
+const getPosts = async (filter) => {
+  const posts = await Post.find(filter)
+    .populate("addedBy")
+    .populate("bumpData")
+    .populate("replyTo")
+    .sort({ createdAt: 1 });
+  let populatedPosts = await User.populate(posts, {
+    path: "bumpData.addedBy"
+  });
+  populatedPosts = await User.populate(posts, { path: "replyTo.addedBy" });
+
+  return populatedPosts;
+};
+
+router.get("/:id", async (req, res, next) => {
+  const postId = req.params.id;
+
+  try {
+    const post = await Post.findById(postId)
+      .populate("bumpData")
+      .populate("addedBy");
+    if (!post) {
+      return res.status(400).send("No post found.");
+    }
+
+    const results = {
+      post
+    };
+
+    if (post.replyTo) {
+      results.replyTo = post.replyTo;
+    }
+
+    results.replies = await getPosts({ replyTo: postId });
+
+    return res.status(200).send(results);
   } catch (error) {
     console.log(error);
     return res.status(500).send(error.message);
@@ -29,7 +64,8 @@ router.post("/", async (req, res, next) => {
 
   const postData = new Post({
     content: req.body.content,
-    addedBy: req.session.user
+    addedBy: req.session.user,
+    replyTo: req.body.replyTo ? req.body.replyTo : undefined
   });
 
   try {
@@ -53,7 +89,10 @@ router.post("/:postId/bump", async (req, res, next) => {
     });
 
     if (!bumpedPost) {
-      const bumped = await Post.create({ addedBy: userId, bumpData: postId });
+      const bumped = await Post.create({
+        addedBy: userId,
+        bumpData: postId
+      });
 
       req.session.user = await User.findByIdAndUpdate(
         userId,
@@ -69,9 +108,22 @@ router.post("/:postId/bump", async (req, res, next) => {
           $addToSet: { bumpUsers: userId }
         },
         { new: true }
-      );
+      ).populate("addedBy");
 
       return res.status(200).send(post);
+    } else {
+      await User.findByIdAndUpdate(userId, {
+        $pull: { bumpes: bumpedPost._id }
+      });
+      await Post.findByIdAndUpdate(
+        postId,
+        {
+          $pull: { bumpUsers: userId }
+        },
+        { new: true }
+      );
+
+      return res.status(204).send();
     }
   } catch (error) {
     console.log(error);
@@ -124,6 +176,19 @@ router.put("/:postId/alien", async (req, res, next) => {
 
       return res.status(200).send(post);
     }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error.message);
+  }
+});
+
+router.delete("/:postId", async (req, res, next) => {
+  try {
+    await Post.findByIdAndDelete(req.params.postId);
+    await Post.deleteMany({
+      $or: [{ replyTo: req.params.postId }, { bumpData: req.params.postId }]
+    });
+    return res.sendStatus(202);
   } catch (error) {
     console.log(error);
     return res.status(500).send(error.message);

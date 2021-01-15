@@ -6,3 +6,40 @@ mixin createPostForm(loggedInUser)
       textarea#postTextarea(placeholder="Share your story!")
       .buttonsContainer
         button#submitPostButton(disabled="") Send
+
+mixin createReplyModal(loggedInUser)
+  #replyModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='replyModalLabel' aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5#replyModalLabel.modal-title Modal title
+          button.close(type='button' data-dismiss='modal' aria-label='Close')
+            span(aria-hidden='true') &times;
+        .modal-body
+          #clickedPostContainer
+          .postFormContainer  
+            .userPhotoContainer
+              img(src=loggedInUser.profilePhoto, alt="User image")
+            .textareaContainer
+              textarea#replyTextarea(placeholder="Share your story!")
+        .modal-footer
+          button.btn.btn-secondary(type='button' data-dismiss='modal') Close
+          button#submitReplyButton.btn.btn-primary(type='button', disabled="") Reply
+
+mixin deletePostModal()
+  #deletePostModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='deletePostModalLabel' aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5#deletePostModalLabel.modal-title Delete post
+          button.close(type='button' data-dismiss='modal' aria-label='Close')
+            span(aria-hidden='true') &times;
+        .modal-body
+          p Are you sure?
+        .modal-footer
+          button.btn.btn-secondary(type='button' data-dismiss='modal') Close
+          button#deletePostButton.btn.btn-primary(type='button') Delete
+
+mixin createPostModals(loggedInUser) 
+  +createReplyModal(loggedInUser)
+  +deletePostModal()          

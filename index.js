@@ -9,6 +9,7 @@ const loginRoute = require("./src/routes/loginRoutes");
 const registerRoute = require("./src/routes/registerRoutes");
 const logoutRoute = require("./src/routes/logoutRoutes");
 const posts = require("./src/routes/api/posts");
+const postRoutes = require("./src/routes/postRoute");
 const { connectMongoDb } = require("./src/utils/connectMongo");
 
 connectMongoDb();
@@ -32,6 +33,7 @@ app.use(
 app.use("/login", loginRoute);
 app.use("/register", registerRoute);
 app.use("/logout", logoutRoute);
+app.use("/post", requireLogin, postRoutes);
 app.use("/api/posts", posts);
 
 const server = app.listen(port, () =>

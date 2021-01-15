@@ -92,6 +92,16 @@ nav a i {
   flex-shrink: 0;
 }
 
+.modal .postFormContainer {
+  border: none;
+  padding: 0;
+  padding-top: var(--spacing1remAll);
+}
+
+.modal .post {
+  padding: 0 0 1rem 0;
+}
+
 .userPhotoContainer {
   width: 50px;
   height: 50px;
@@ -207,4 +217,17 @@ nav a i {
   font-size: 0.8rem;
   color: #a3a2a2;
   margin-bottom: 5px;
+}
+
+.isReply {
+  margin-bottom: 0.2rem;
+}
+
+.isReply a {
+  color: #a3a2a2;
+}
+
+.post.largeFont .postBody,
+.post.largeFont .postFooter {
+  font-size: 1.5rem;
 }
