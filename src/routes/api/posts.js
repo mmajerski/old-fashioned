@@ -6,8 +6,16 @@ const User = require("../../models/User");
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
+  const searchObj = req.query;
+
+  if (searchObj.isReply) {
+    const isReply = searchObj.isReply === "true";
+    searchObj.replyTo = { $exists: isReply };
+    delete searchObj.isReply;
+  }
+
   try {
-    const posts = await getPosts();
+    const posts = await getPosts(searchObj);
     return res.status(200).send(posts);
   } catch (error) {
     console.log(error);

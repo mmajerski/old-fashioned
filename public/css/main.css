@@ -231,3 +231,107 @@ nav a i {
 .post.largeFont .postFooter {
   font-size: 1.5rem;
 }
+
+.profileHeaderContainer .coverPhotoContainer {
+  height: 160px;
+  background-color: var(--hoverColor);
+}
+
+.coverPhotoContainer {
+  position: relative;
+}
+
+.profileHeaderContainer .userPhotoContainer {
+  height: 132px;
+  width: 132px;
+  margin-left: var(--spacing1remAll);
+  position: absolute;
+  bottom: -35px;
+}
+
+.profileHeaderContainer .userPhotoContainer img {
+  border: 2px solid var(--blackColor);
+}
+
+.profileHeaderContainer .profileButtonsContainer {
+  text-align: center;
+  padding: var(--spacing1remAll);
+  min-height: 66px;
+}
+
+.profileButton,
+.followButton {
+  border: 1px solid var(--lightBlack);
+  color: var(--lightBlack);
+  font-weight: bold;
+  padding: 5px 15px;
+  border-radius: 60px;
+  display: inline-block;
+  margin-left: var(--spacing1remAll);
+}
+
+.profileButton:hover,
+.followButton:hover {
+  background-color: #a3a2a2;
+}
+
+.followButton.following {
+  background-color: var(--lightBlack);
+  color: var(--hoverColor);
+}
+
+.username,
+.followersContainer {
+  text-align: right;
+  padding-right: var(--spacing1remAll);
+}
+
+.username {
+  font-weight: 800;
+  font-size: 1.5rem;
+}
+
+.followersInfo {
+  margin-left: 5px;
+}
+
+.followersContainer .followersInfo:hover,
+.followersContainer .followingInfo:hover {
+  color: #a3a2a2;
+  border-bottom: 1px solid #a3a2a2;
+}
+
+.value {
+  margin: 0 5px 0 5px;
+  font-weight: bold;
+}
+
+.txt {
+  color: #a3a2a2;
+}
+
+.tabsContainer {
+  display: flex;
+  border-bottom: 1px solid var(--lightGreyBorder);
+  flex-shrink: 0;
+}
+
+.tab {
+  flex: 1;
+  height: 52px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--lightBlack);
+  font-weight: bold;
+}
+
+.tab.active {
+  color: var(--blackColor);
+  border-bottom: 2px solid var(--blackColor);
+}
+
+.tab:hover {
+  color: var(--blackColor);
+  background-color: var(--lightGreyBorder);
+}

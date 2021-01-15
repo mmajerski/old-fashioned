@@ -1,0 +1,38 @@
+extends shared/main-shared.pug
+
+block content
+  if !userProfile
+    h1 User not found
+  else
+    script.
+      const userProfileId = '!{ userProfile._id }';
+      const selectedTab = '!{ selectedTab }';
+    .profileHeaderContainer
+      .coverPhotoContainer
+        .userPhotoContainer
+          img(src=userProfile.profilePhoto, alt="User profile image")
+      .profileButtonsContainer
+        if userProfile._id != loggedInUser._id
+          a.profileButton(href=`/messages/${userProfile._id}`)
+            i.far.fa-comment
+          +createFollowButton(userProfile, true)
+
+      .followersContainer
+        .username #{userProfile.username}
+        span.followingInfo
+          a(href=`/profile/${userProfile.username}/following`)
+            span.value #{0}
+            span.txt Following
+        span.followersInfo
+          a(href=`/profile/${userProfile.username}/followers`)
+            span.value #{0}
+            span.txt Followers
+    .tabsContainer
+      +createTab("Posts", `/profile/${userProfile.username}`, selectedTab === "replies" ? false : true)
+      +createTab("Replies", `/profile/${userProfile.username}/replies`, selectedTab === "replies" ? true : false)
+    .postsContainer
+
+    +createPostModals(loggedInUser)
+
+block scripts
+  script(src="/js/profile.js")

@@ -29,7 +29,7 @@ const userSchema = new Schema(
     password: { type: String, required: true, select: false },
     profilePhoto: {
       type: String,
-      default: "images/user.svg"
+      default: "/images/user.png"
     },
     aliens: [{ type: Schema.Types.ObjectId, ref: "Post" }],
     bumpes: [{ type: Schema.Types.ObjectId, ref: "Post" }]
