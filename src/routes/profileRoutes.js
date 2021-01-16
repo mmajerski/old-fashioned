@@ -33,6 +33,26 @@ router.get("/:username/replies", async (req, res) => {
   res.status(200).render("profile", payload);
 });
 
+router.get("/:username/following", async (req, res) => {
+  const payload = await retrieveProfileData(
+    req.params.username,
+    req.session.user
+  );
+  payload.selectedTab = "following";
+
+  res.status(200).render("followersFollowing", payload);
+});
+
+router.get("/:username/followers", async (req, res) => {
+  const payload = await retrieveProfileData(
+    req.params.username,
+    req.session.user
+  );
+  payload.selectedTab = "followers";
+
+  res.status(200).render("followersFollowing", payload);
+});
+
 const retrieveProfileData = async (username, loggedInUser) => {
   try {
     const user = await User.findOne({ username });

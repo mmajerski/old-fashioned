@@ -1,0 +1,18 @@
+extends shared/main-shared.pug
+
+block content
+  if !userProfile
+    h1 User not found
+  else
+    script.
+      const userProfileId = '!{ userProfile._id }';
+      const selectedTab = '!{ selectedTab }';
+    
+    .tabsContainer
+      +createTab("Following", `/profile/${userProfile.username}/following`, selectedTab === "followers" ? false : true)
+      +createTab("Followers", `/profile/${userProfile.username}/followers`, selectedTab === "followers" ? true : false)
+
+    .resultsContainer
+
+block scripts
+  script(src="/js/followersFollowing.js")

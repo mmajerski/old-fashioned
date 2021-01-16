@@ -139,6 +139,36 @@ $("#deletePostButton").click((e) => {
   });
 });
 
+$(document).on("click", ".followButton", (e) => {
+  const userId = $(e.target).data().user;
+
+  $.ajax({
+    url: `/api/users/${userId}/follow`,
+    type: "PUT",
+    success: (data, status, xhr) => {
+      if (xhr.status === 404) {
+        return;
+      }
+
+      let updateValue = 1;
+      if (data.following && data.following.includes(userId)) {
+        $(e.target).addClass("following");
+        $(e.target).text("Following");
+      } else {
+        $(e.target).removeClass("following");
+        $(e.target).text("Follow");
+        updateValue = -1;
+      }
+
+      const followersLabel = $("#followersTotal");
+      if (followersLabel.length !== 0) {
+        const followersText = followersLabel.text();
+        followersLabel.text(+followersText + updateValue);
+      }
+    }
+  });
+});
+
 const createPostTemplate = (postData, mainPost = false) => {
   const bumpedBy = postData.bumpData ? postData.addedBy.username : null;
   postData = postData.bumpData ? postData.bumpData : postData;

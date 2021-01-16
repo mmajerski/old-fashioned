@@ -9,6 +9,7 @@ const loginRoute = require("./src/routes/loginRoutes");
 const registerRoute = require("./src/routes/registerRoutes");
 const logoutRoute = require("./src/routes/logoutRoutes");
 const posts = require("./src/routes/api/posts");
+const users = require("./src/routes/api/users");
 const postRoutes = require("./src/routes/postRoute");
 const profileRoutes = require("./src/routes/profileRoutes");
 
@@ -38,6 +39,7 @@ app.use("/logout", logoutRoute);
 app.use("/post", requireLogin, postRoutes);
 app.use("/profile", requireLogin, profileRoutes);
 app.use("/api/posts", posts);
+app.use("/api/users", users);
 
 const server = app.listen(port, () =>
   console.log("Server is up on port " + port)
