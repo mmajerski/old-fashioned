@@ -1,3 +1,5 @@
+var cropper;
+
 $("#postTextarea, #replyTextarea").keyup((e) => {
   const isModalOpen = $(e.target).parents(".modal").length === 1;
 
@@ -136,6 +138,84 @@ $("#deletePostButton").click((e) => {
     success: (postData) => {
       location.reload();
     }
+  });
+});
+
+$("#fileUpload").change(function () {
+  if (this.files && this.files[0]) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const image = document.getElementById("imagePreview");
+      image.src = e.target.result;
+      if (cropper) {
+        cropper.destroy();
+      }
+
+      cropper = new Cropper(image, { aspectRatio: 1 / 1, background: false });
+    };
+    reader.readAsDataURL(this.files[0]);
+  }
+});
+
+$("#uploadImageButton").click(() => {
+  const canvas = cropper.getCroppedCanvas();
+  if (!canvas) {
+    return;
+  }
+
+  canvas.toBlob((blob) => {
+    const formData = new FormData();
+    formData.append("croppedImage", blob);
+
+    $.ajax({
+      url: "/api/users/profilePhoto",
+      type: "POST",
+      data: formData,
+      processData: false, // do not convert to string
+      contentType: false, // do not add Content-Type header
+      success: (data, status, xhr) => {
+        location.reload();
+      }
+    });
+  });
+});
+
+$("#coverUpload").change(function () {
+  if (this.files && this.files[0]) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const image = document.getElementById("coverPreview");
+      image.src = e.target.result;
+      if (cropper) {
+        cropper.destroy();
+      }
+
+      cropper = new Cropper(image, { aspectRatio: 1 / 1, background: false });
+    };
+    reader.readAsDataURL(this.files[0]);
+  }
+});
+
+$("#coverImageButton").click(() => {
+  const canvas = cropper.getCroppedCanvas();
+  if (!canvas) {
+    return;
+  }
+
+  canvas.toBlob((blob) => {
+    const formData = new FormData();
+    formData.append("croppedImage", blob);
+
+    $.ajax({
+      url: "/api/users/coverPhoto",
+      type: "POST",
+      data: formData,
+      processData: false, // do not convert to string
+      contentType: false, // do not add Content-Type header
+      success: (data, status, xhr) => {
+        location.reload();
+      }
+    });
   });
 });
 

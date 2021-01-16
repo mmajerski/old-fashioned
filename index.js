@@ -12,6 +12,7 @@ const posts = require("./src/routes/api/posts");
 const users = require("./src/routes/api/users");
 const postRoutes = require("./src/routes/postRoute");
 const profileRoutes = require("./src/routes/profileRoutes");
+const uploadRoutes = require("./src/routes/uploadRoutes");
 
 const { connectMongoDb } = require("./src/utils/connectMongo");
 
@@ -38,6 +39,7 @@ app.use("/register", registerRoute);
 app.use("/logout", logoutRoute);
 app.use("/post", requireLogin, postRoutes);
 app.use("/profile", requireLogin, profileRoutes);
+app.use("/uploads", requireLogin, uploadRoutes);
 app.use("/api/posts", posts);
 app.use("/api/users", users);
 

@@ -19,8 +19,18 @@ html(lang="en")
       integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==",
       crossorigin="anonymous"
     )
-    link(link rel="preconnect" href="https://fonts.gstatic.com")
-    link(link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet")
+    link(link, rel="preconnect", href="https://fonts.gstatic.com")
+    link(
+      link,
+      href="https://fonts.googleapis.com/css2?family=Lato&display=swap",
+      rel="stylesheet"
+    )
+    link(
+      rel="stylesheet",
+      href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.9/cropper.min.css",
+      integrity="sha512-w+u2vZqMNUVngx+0GVZYM21Qm093kAexjueWOv9e9nIeYJb1iEfiHC7Y+VvmP/tviQyA5IR32mwN/5hTEJx6Ng==",
+      crossorigin="anonymous"
+    )
     link(rel="stylesheet", href="/css/main.css")
 
     //- link(
@@ -31,7 +41,7 @@ html(lang="en")
     title= title
   body
     script.
-      const loggedInUser =  !{loggedInUserForJs};
+      const loggedInUser = !{ loggedInUserForJs };
     .wrapper
       .row.justify-content-center
         .col-10.col-md-5
@@ -39,11 +49,11 @@ html(lang="en")
             a(href="/")
               i.fas.fa-smile-wink
             a(href="/")
-              i.fas.fa-home        
+              i.fas.fa-home 
             a(href="/notifications")
               i.fab.fa-hornbill
             a(href="/search")
-              i.fas.fa-search      
+              i.fas.fa-search 
             a(href="/profile")
               i.fas.fa-user-ninja
             a(href="/messages")
@@ -69,6 +79,12 @@ html(lang="en")
       integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx",
       crossorigin="anonymous"
     )
+    script(
+      src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.9/cropper.min.js",
+      integrity="sha512-9pGiHYK23sqK5Zm0oF45sNBAX/JqbZEP7bSDHyt+nT3GddF+VFIcYNqREt0GDpmFVZI3LZ17Zu9nMMc9iktkCw==",
+      crossorigin="anonymous"
+    )
+
     //- <!--
     //- The integrity and crossorigin attributes are used for Subresource Integrity (SRI) checking. 
     //- This allows browsers to ensure that resources hosted on third-party servers have not been tampered with.

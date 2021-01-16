@@ -50,6 +50,48 @@ mixin deletePostModal
           button.btn.btn-secondary(type="button", data-dismiss="modal") Close
           button#deletePostButton.btn.btn-primary(type="button") Delete
 
+mixin imageUploadModal
+  #imageUploadModal.modal.fade(
+    tabindex="-1",
+    role="dialog",
+    aria-labelledby="imageUploadModalLabel",
+    aria-hidden="true"
+  )
+    .modal-dialog(role="document")
+      .modal-content
+        .modal-header
+          h5#imageUploadModalLabel.modal-title Upload Photo
+          button.close(type="button", data-dismiss="modal", aria-label="Close")
+            span(aria-hidden="true") &times;
+        .modal-body
+          input#fileUpload(type="file", name="fileUpload", accept="image/*")
+          .imagePreviewContainer
+            img#imagePreview
+        .modal-footer
+          button.btn.btn-secondary(type="button", data-dismiss="modal") Cancel
+          button#uploadImageButton.btn.btn-primary(type="button") Save
+
+mixin coverUploadModal
+  #coverUploadModal.modal.fade(
+    tabindex="-1",
+    role="dialog",
+    aria-labelledby="coverUploadModalLabel",
+    aria-hidden="true"
+  )
+    .modal-dialog(role="document")
+      .modal-content
+        .modal-header
+          h5#coverUploadModalLabel.modal-title Upload Photo
+          button.close(type="button", data-dismiss="modal", aria-label="Close")
+            span(aria-hidden="true") &times;
+        .modal-body
+          input#coverUpload(type="file", name="fileUpload", accept="image/*")
+          .imagePreviewContainer
+            img#coverPreview
+        .modal-footer
+          button.btn.btn-secondary(type="button", data-dismiss="modal") Cancel
+          button#coverImageButton.btn.btn-primary(type="button") Save
+
 mixin createPostModals(loggedInUser)
   +createReplyModal(loggedInUser)
   +deletePostModal 

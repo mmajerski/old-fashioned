@@ -232,12 +232,12 @@ nav a i {
   font-size: 1.5rem;
 }
 
-.profileHeaderContainer .coverPhotoContainer {
+.profileHeaderContainer .coverPhotoSection {
   height: 160px;
   background-color: var(--hoverColor);
 }
 
-.coverPhotoContainer {
+.coverPhotoSection {
   position: relative;
 }
 
@@ -257,6 +257,9 @@ nav a i {
   text-align: center;
   padding: var(--spacing1remAll);
   min-height: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .profileButton,
@@ -349,4 +352,49 @@ nav a i {
 
 .user .userDetailsContainer {
   padding: 0 var(--spacing1remAll);
+}
+
+.profilePhotoButton {
+  position: absolute;
+  font-size: 50px;
+  color: var(--lightGreyBorder);
+  left: 35px;
+  top: 20px;
+  display: none;
+}
+
+.coverPhotoButton {
+  font-size: 50px;
+  color: var(--lightGreyBorder);
+  display: none;
+}
+
+.coverPhotoContainer {
+  width: 100%;
+  height: 100%;
+}
+
+.coverPhotoContainer img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.coverPhotoButton {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.userPhotoContainer:hover .profilePhotoButton,
+.coverPhotoContainer:hover .coverPhotoButton {
+  display: block;
+}
+
+#imagePreview,
+#coverPreview {
+  display: block;
+  max-width: 100%;
 }

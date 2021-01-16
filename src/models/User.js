@@ -31,6 +31,9 @@ const userSchema = new Schema(
       type: String,
       default: "/images/user.png"
     },
+    coverPhoto: {
+      type: String
+    },
     aliens: [{ type: Schema.Types.ObjectId, ref: "Post" }],
     bumpes: [{ type: Schema.Types.ObjectId, ref: "Post" }],
     following: [{ type: Schema.Types.ObjectId, ref: "User" }],

@@ -12,9 +12,25 @@ block content
     - followingTotal = userProfile.following.length;
 
     .profileHeaderContainer
-      .coverPhotoContainer
+      .coverPhotoSection
+        .coverPhotoContainer
+          if userProfile.coverPhoto
+            img(src=userProfile.coverPhoto, alt="Cover photo")
+
+          if userProfile._id == loggedInUser._id
+            button.coverPhotoButton(
+              data-toggle="modal",
+              data-target="#coverUploadModal"
+            )
+              i.fas.fa-image
         .userPhotoContainer
           img(src=userProfile.profilePhoto, alt="User profile image")
+          if userProfile._id == loggedInUser._id
+            button.profilePhotoButton(
+              data-toggle="modal",
+              data-target="#imageUploadModal"
+            )
+              i.fas.fa-image
       .profileButtonsContainer
         if userProfile._id != loggedInUser._id
           a.profileButton(href=`/messages/${userProfile._id}`)
@@ -43,6 +59,8 @@ block content
     .postsContainer
 
     +createPostModals(loggedInUser)
+    +imageUploadModal
+    +coverUploadModal
 
 block scripts
   script(src="/js/profile.js")
