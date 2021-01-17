@@ -14,10 +14,20 @@ const loadPosts = () => {
         return $(".postsContainer").append("<p>No items yet.</p>");
       }
 
+      let pinnedPost;
       posts.forEach((post) => {
+        if (post.pinnedPost) {
+          pinnedPost = post;
+          return;
+        }
         const postTemplate = createPostTemplate(post);
         $(".postsContainer").prepend(postTemplate);
       });
+
+      if (pinnedPost) {
+        const postTemplate = createPostTemplate(pinnedPost);
+        $(".postsContainer").prepend(postTemplate);
+      }
     }
   );
 };

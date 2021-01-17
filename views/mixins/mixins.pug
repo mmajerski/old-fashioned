@@ -92,9 +92,49 @@ mixin coverUploadModal
           button.btn.btn-secondary(type="button", data-dismiss="modal") Cancel
           button#coverImageButton.btn.btn-primary(type="button") Save
 
+mixin pinPostModal
+  #pinPostModal.modal.fade(
+    tabindex="-1",
+    role="dialog",
+    aria-labelledby="pinPostModalLabel",
+    aria-hidden="true"
+  )
+    .modal-dialog(role="document")
+      .modal-content
+        .modal-header
+          h5#pinPostModalLabel.modal-title Pin Post
+          button.close(type="button", data-dismiss="modal", aria-label="Close")
+            span(aria-hidden="true") &times;
+        .modal-body
+          p Are you sure?
+        .modal-footer
+          button.btn.btn-secondary(type="button", data-dismiss="modal") Cancel
+          button#pinPostButton.btn.btn-primary(type="button") Save
+
+mixin unpinPostModal
+  #unpinPostModal.modal.fade(
+    tabindex="-1",
+    role="dialog",
+    aria-labelledby="unpinPostModalLabel",
+    aria-hidden="true"
+  )
+    .modal-dialog(role="document")
+      .modal-content
+        .modal-header
+          h5#unpinPostModalLabel.modal-title Unpin Post
+          button.close(type="button", data-dismiss="modal", aria-label="Close")
+            span(aria-hidden="true") &times;
+        .modal-body
+          p Are you sure?
+        .modal-footer
+          button.btn.btn-secondary(type="button", data-dismiss="modal") Cancel
+          button#unpinPostButton.btn.btn-primary(type="button") Save
+
 mixin createPostModals(loggedInUser)
   +createReplyModal(loggedInUser)
   +deletePostModal 
+  +pinPostModal
+  +unpinPostModal
 
 mixin createFollowButton(user, isFollowing)
   - option = isFollowing ? 'Following' : 'Follow';

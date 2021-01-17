@@ -14,6 +14,11 @@ router.get("/", async (req, res, next) => {
     delete searchObj.isReply;
   }
 
+  if (searchObj.search) {
+    searchObj.content = { $regex: searchObj.search, $options: "i" };
+    delete searchObj.search;
+  }
+
   try {
     const posts = await getPosts(searchObj);
     return res.status(200).send(posts);
@@ -197,6 +202,19 @@ router.delete("/:postId", async (req, res, next) => {
       $or: [{ replyTo: req.params.postId }, { bumpData: req.params.postId }]
     });
     return res.sendStatus(202);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error.message);
+  }
+});
+
+router.put("/:postId", async (req, res, next) => {
+  try {
+    await Post.updateMany({ addedBy: req.session.user }, { pinnedPost: false });
+
+    await Post.findByIdAndUpdate(req.params.postId, req.body);
+
+    return res.sendStatus(204);
   } catch (error) {
     console.log(error);
     return res.status(500).send(error.message);

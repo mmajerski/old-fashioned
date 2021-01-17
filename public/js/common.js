@@ -1,4 +1,4 @@
-var cropper;
+let cropper;
 
 $("#postTextarea, #replyTextarea").keyup((e) => {
   const isModalOpen = $(e.target).parents(".modal").length === 1;
@@ -129,12 +129,48 @@ $("#deletePostModal").on("show.bs.modal", (e) => {
   $("#deletePostButton").data("id", postId);
 });
 
+$("#pinPostModal").on("show.bs.modal", (e) => {
+  const postId = extractPostId($(e.relatedTarget));
+  $("#pinPostButton").data("id", postId);
+});
+
+$("#unpinPostModal").on("show.bs.modal", (e) => {
+  const postId = extractPostId($(e.relatedTarget));
+  $("#unpinPostButton").data("id", postId);
+});
+
 $("#deletePostButton").click((e) => {
   const postId = $(e.target).data("id");
 
   $.ajax({
     url: `/api/posts/${postId}`,
     type: "DELETE",
+    success: (postData) => {
+      location.reload();
+    }
+  });
+});
+
+$("#pinPostButton").click((e) => {
+  const postId = $(e.target).data("id");
+
+  $.ajax({
+    url: `/api/posts/${postId}`,
+    type: "PUT",
+    data: { pinnedPost: true },
+    success: (postData) => {
+      location.reload();
+    }
+  });
+});
+
+$("#unpinPostButton").click((e) => {
+  const postId = $(e.target).data("id");
+
+  $.ajax({
+    url: `/api/posts/${postId}`,
+    type: "PUT",
+    data: { pinnedPost: false },
     success: (postData) => {
       location.reload();
     }
@@ -272,8 +308,29 @@ const createPostTemplate = (postData, mainPost = false) => {
   }
 
   let deleteButton = "";
+  let pinnedClass = "";
   if (postData.addedBy._id === loggedInUser._id) {
-    deleteButton = `<button data-id="${postData._id}" data-toggle="modal" data-target="#deletePostModal"><i class="far fa-trash-alt"></i></button>`;
+    if (postData.pinnedPost) {
+      pinnedClass = "active";
+    }
+
+    deleteButton = `<button data-id="${
+      postData._id
+    }" data-toggle="modal" data-target="#pinPostModal" class="pinnedButton ${pinnedClass}">
+      <i class="fas fa-thumbtack"></i>
+    </button>
+   ${
+     postData.pinnedPost
+       ? ` <button data-id="${postData._id}" data-toggle="modal" data-target="#unpinPostModal" class="pinnedButton">
+   <i class="fas fa-unlink"></i>`
+       : ""
+   }
+    </button>
+    <button data-id="${
+      postData._id
+    }" data-toggle="modal" data-target="#deletePostModal">
+      <i class="far fa-trash-alt"></i>
+    </button>`;
   }
 
   return `<div class="post ${mainPost ? "largeFont" : ""}" data-id="${
@@ -327,6 +384,32 @@ const createPostTemplate = (postData, mainPost = false) => {
         </div>
       </div>
     </div>
+  </div>`;
+};
+
+const createUserTemplate = (userData, showFollowButton) => {
+  const isFollowing = loggedInUser.following.includes(userData._id);
+  const option = isFollowing ? "Following" : "Follow";
+  const buttonClass = isFollowing ? "followButton following" : "followButton";
+
+  let followButton = "";
+  if (showFollowButton && loggedInUser._id !== userData._id) {
+    followButton = `<div class="followButtonContainer">
+      <button class="${buttonClass}" data-user="${userData._id}">${option}</button>
+    </div>`;
+  }
+
+  return `<div class="user">
+    <div class="userPhotoContainer">
+      <img src=${userData.profilePhoto} />
+    </div>
+    <div class="userDetailsContainer">
+      <div class="header">
+        <a href="/profile/${userData.username}" class="showUnderline">${userData.firstName} ${userData.lastName}</a>
+        <span class="username">${userData.username}</span>
+      </div>
+    </div>
+    ${followButton}
   </div>`;
 };
 

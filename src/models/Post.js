@@ -15,7 +15,8 @@ const postSchema = new Schema(
     aliens: [{ type: Schema.Types.ObjectId, ref: "User" }],
     bumpUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
     bumpData: { type: Schema.Types.ObjectId, ref: "Post" },
-    replyTo: { type: Schema.Types.ObjectId, ref: "Post" }
+    replyTo: { type: Schema.Types.ObjectId, ref: "Post" },
+    pinnedPost: Boolean
   },
   {
     timestamps: true

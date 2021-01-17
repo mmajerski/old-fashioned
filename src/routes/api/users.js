@@ -8,6 +8,27 @@ const User = require("../../models/User");
 
 const router = express.Router();
 
+router.get("/", async (req, res, next) => {
+  let searchObj;
+  if (req.query.search) {
+    searchObj = {
+      $or: [
+        { firstName: { $regex: req.query.search, $options: "i" } },
+        { lastName: { $regex: req.query.search, $options: "i" } },
+        { username: { $regex: req.query.search, $options: "i" } }
+      ]
+    };
+  }
+
+  try {
+    const results = await User.find(searchObj);
+    return res.status(200).send(results);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error.message);
+  }
+});
+
 router.put("/:userId/follow", async (req, res, next) => {
   try {
     const user = await User.findById(req.params.userId);

@@ -398,3 +398,23 @@ nav a i {
   display: block;
   max-width: 100%;
 }
+
+.pinnedButton.active {
+  color: var(--blackColor);
+}
+
+.searchBarContainer {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: 10px 0 30px 0;
+}
+
+#searchBox {
+  padding: 10px;
+  flex: 0.5;
+  border: none;
+  border-radius: 20px;
+  background-color: var(--whiteColor);
+  box-shadow: 2px 2px 10px 10px var(--blackColor);
+}
