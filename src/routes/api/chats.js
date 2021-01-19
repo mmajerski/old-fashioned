@@ -31,7 +31,7 @@ router.get("/", async (req, res, next) => {
 
     if (req.query.unreadOnly) {
       chats = chats.filter(
-        (chat) => !chat.latestMessage?.readBy.includes(req.session.user._id)
+        (chat) => !chat.latestMessage.readBy.includes(req.session.user._id)
       );
     }
 
