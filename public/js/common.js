@@ -1,5 +1,10 @@
 let cropper;
 
+$(document).ready(() => {
+  refreshMessagesBadge();
+  refreshNotificationsBadge();
+});
+
 $("#postTextarea, #replyTextarea").keyup((e) => {
   const isModalOpen = $(e.target).parents(".modal").length === 1;
 
@@ -270,6 +275,7 @@ $(document).on("click", ".followButton", (e) => {
       if (data.following && data.following.includes(userId)) {
         $(e.target).addClass("following");
         $(e.target).text("Following");
+        emitNotification(userId);
       } else {
         $(e.target).removeClass("following");
         $(e.target).text("Follow");
@@ -283,6 +289,15 @@ $(document).on("click", ".followButton", (e) => {
       }
     }
   });
+});
+
+$(document).on("click", ".notification.active", (e) => {
+  const notificationId = $(e.target).data().id;
+  const href = $(e.target).attr("href");
+  e.preventDefault();
+  const cb = () => (window.location = href);
+
+  notificationOpen(notificationId, cb);
 });
 
 const createPostTemplate = (postData, mainPost = false) => {
@@ -426,12 +441,15 @@ const extractPostId = (elem) => {
 };
 
 const messageReceived = (message) => {
-  if ($(".chatContainer").length == 0) {
+  if ($(`[data-room="${message.chat._id}"]`).length == 0) {
     // notification
   } else {
     const template = createMessageTemplate(message);
     $(".messages").append(template);
+    autoBottomScroll();
   }
+
+  refreshMessagesBadge();
 };
 
 function timeDifference(current, previous) {
@@ -478,5 +496,52 @@ const renderPostWithReplies = (results, container) => {
   results.replies.forEach((reply) => {
     const template = createPostTemplate(reply);
     container.prepend(template);
+  });
+};
+
+const notificationOpen = (notificationId = null, cb = null) => {
+  if (!cb) {
+    cb = () => location.reload();
+  }
+
+  const url =
+    notificationId != null
+      ? `/api/notifications/${notificationId}/opened`
+      : `/api/notifications/opened`;
+
+  $.ajax({
+    url,
+    type: "PUT",
+    success: () => {
+      cb();
+    }
+  });
+};
+
+const allNotificationsOpened = () => {
+  notificationOpen();
+};
+
+const refreshMessagesBadge = () => {
+  $.get("/api/chats", { unreadOnly: true }, (data) => {
+    const results = data.filter(
+      (chat) => chat.latestMessage.sender !== loggedInUser._id
+    ).length;
+    if (results) {
+      $("#messagesBadge").text(results).addClass("active");
+    } else {
+      $("#messagesBadge").text("").removeClass("active");
+    }
+  });
+};
+
+const refreshNotificationsBadge = () => {
+  $.get("/api/notifications", { unreadOnly: true }, (data) => {
+    const results = data.length;
+    if (results) {
+      $("#notificationsBadge").text(results).addClass("active");
+    } else {
+      $("#notificationsBadge").text("").removeClass("active");
+    }
   });
 };

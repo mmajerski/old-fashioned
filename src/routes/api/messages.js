@@ -2,6 +2,7 @@ const express = require("express");
 const Chat = require("../../models/Chat");
 
 const Message = require("../../models/Message");
+const Notification = require("../../models/Notification");
 
 const router = express.Router();
 
@@ -18,8 +19,21 @@ router.post("/", async (req, res, next) => {
     message = await message.populate("chat").execPopulate();
     message = await message.populate("chat.users").execPopulate();
 
-    await Chat.findByIdAndUpdate(req.body.chatId, {
+    const chat = await Chat.findByIdAndUpdate(req.body.chatId, {
       latestMessage: message
+    });
+
+    chat.users.forEach((userId) => {
+      if (userId.toString() === message.sender._id.toString()) {
+        return;
+      }
+
+      Notification.insertNotification(
+        userId,
+        message.sender._id,
+        "newMessage",
+        message.chat._id
+      );
     });
 
     return res.status(201).send(message);

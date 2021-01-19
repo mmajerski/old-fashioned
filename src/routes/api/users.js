@@ -5,6 +5,7 @@ const fs = require("fs");
 var upload = multer({ dest: "uploads/" });
 
 const User = require("../../models/User");
+const Notification = require("../../models/Notification");
 
 const router = express.Router();
 
@@ -52,6 +53,15 @@ router.put("/:userId/follow", async (req, res, next) => {
     await User.findByIdAndUpdate(req.params.userId, {
       [option]: { followers: req.session.user._id }
     });
+
+    if (!isFollowing) {
+      await Notification.insertNotification(
+        req.params.userId,
+        req.session.user._id,
+        "follow",
+        req.session.user._id
+      );
+    }
 
     res.status(200).send(req.session.user);
   } catch (error) {

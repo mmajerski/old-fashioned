@@ -20,11 +20,12 @@ block content
           div
           div
           div
-      .chatContainer(style="visibility: hidden")
+      .chatContainer(style="visibility: hidden", data-room=chat._id)
         ul.messages
         .typingGif
-          img(src="/images/typing.gif", alt="Typing effect")
-          span#usernameP 
+          .gifWrapper
+            img(src="/images/typing.gif", alt="Typing effect")
+            span#usernameP 
         .footer
           textarea.inputText(name="messageInput", placeholder="Message...")
           button.sendMessageButton

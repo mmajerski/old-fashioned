@@ -1,4 +1,5 @@
 const express = require("express");
+const Notification = require("../../models/Notification");
 
 const Post = require("../../models/Post");
 const User = require("../../models/User");

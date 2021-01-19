@@ -11,12 +11,14 @@ const logoutRoute = require("./src/routes/logoutRoutes");
 const posts = require("./src/routes/api/posts");
 const users = require("./src/routes/api/users");
 const chats = require("./src/routes/api/chats");
+const notifications = require("./src/routes/api/notifications");
 const messages = require("./src/routes/api/messages");
 const postRoutes = require("./src/routes/postRoute");
 const profileRoutes = require("./src/routes/profileRoutes");
 const uploadRoutes = require("./src/routes/uploadRoutes");
 const searchRoutes = require("./src/routes/searchRoutes");
 const messagesRoutes = require("./src/routes/messagesRoutes");
+const notificationsRoutes = require("./src/routes/notificationsRoutes");
 
 const { connectMongoDb } = require("./src/utils/connectMongo");
 
@@ -46,10 +48,12 @@ app.use("/profile", requireLogin, profileRoutes);
 app.use("/uploads", requireLogin, uploadRoutes);
 app.use("/search", requireLogin, searchRoutes);
 app.use("/messages", requireLogin, messagesRoutes);
+app.use("/notifications", requireLogin, notificationsRoutes);
 app.use("/api/posts", posts);
 app.use("/api/users", users);
 app.use("/api/chats", chats);
 app.use("/api/messages", messages);
+app.use("/api/notifications", notifications);
 
 const server = app.listen(port, () =>
   console.log("Server is up on port " + port)
@@ -93,11 +97,15 @@ io.on("connection", (socket) => {
     }
 
     chat.users.forEach((user) => {
-      if (user._id == message.sender._id) {
+      if (user._id === message.sender._id) {
         return;
       }
 
       socket.in(user._id).emit("messageReceived", message);
     });
+  });
+
+  socket.on("notificationReceived", (room) => {
+    socket.in(room).emit("notificationReceived");
   });
 });

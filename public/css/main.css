@@ -61,6 +61,7 @@ nav a {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 nav a:hover {
@@ -356,6 +357,11 @@ nav a i {
   flex-direction: column;
 }
 
+.resultsContainer2 {
+  display: flex;
+  margin-top: 10px;
+}
+
 .resultsContainer .user {
   padding: var(--spacing1remAll);
   display: flex;
@@ -496,6 +502,10 @@ nav a i {
   flex: 1;
 }
 
+.resultsDetailsContainer span {
+  margin-left: 20px;
+}
+
 .resultsDetailsContainer .heading {
   font-weight: 500;
 }
@@ -519,6 +529,11 @@ nav a i {
   display: flex;
   align-items: center;
   padding: 5px;
+}
+
+.resultsImageContainer img {
+  height: 40px;
+  width: 40px;
 }
 
 .groupChatImage img {
@@ -781,7 +796,13 @@ nav a i {
 
 .typingGif {
   padding: 0 var(--spacing1remAll);
+  margin-bottom: -10px;
   display: none;
+}
+
+.gifWrapper {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .typingGif img {
@@ -791,4 +812,37 @@ nav a i {
 #usernameP {
   font-size: 0.8rem;
   color: var(--hoverColor);
+}
+
+.notification.active {
+  background-color: var(--lightGreyBorder);
+}
+
+.notification * {
+  pointer-events: none;
+}
+
+#notificationsBadge,
+#messagesBadge {
+  background-color: var(--lightGreyBorder);
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+}
+
+#notificationsBadge.active,
+#messagesBadge.active {
+  visibility: visible;
+}
+
+.unread {
+  font-weight: 800;
 }

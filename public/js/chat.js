@@ -19,6 +19,7 @@ $(document).ready(() => {
     });
 
     autoBottomScroll(true);
+    markAllMessagesAsRead();
 
     $(".loaderContainer").remove();
     $(".chatContainer").css("visibility", "visible");
@@ -132,4 +133,14 @@ const autoBottomScroll = (animated) => {
   } else {
     container.scrollTop(total);
   }
+};
+
+const markAllMessagesAsRead = () => {
+  $.ajax({
+    url: `/api/chats/${chatId}/messages/markAsRead`,
+    type: "PUT",
+    success: () => {
+      refreshMessagesBadge();
+    }
+  });
 };
