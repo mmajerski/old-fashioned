@@ -425,6 +425,15 @@ const extractPostId = (elem) => {
   return postId;
 };
 
+const messageReceived = (message) => {
+  if ($(".chatContainer").length == 0) {
+    // notification
+  } else {
+    const template = createMessageTemplate(message);
+    $(".messages").append(template);
+  }
+};
+
 function timeDifference(current, previous) {
   const msPerMinute = 60 * 1000;
   const msPerHour = msPerMinute * 60;

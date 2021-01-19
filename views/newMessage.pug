@@ -1,0 +1,13 @@
+extends shared/main-shared.pug
+
+block content
+  .chatPageContainer
+    .chatTitleBar
+      label(for="userSearchTextbox") To
+      #selectedUsers
+        input#userSearchTextbox(type="text", placeholder="User...")
+    .resultsContainer
+    button#createChatButton(disabled) Create Chat
+
+block scripts
+  script(src="/js/newMessages.js")

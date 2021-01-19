@@ -130,6 +130,29 @@ mixin unpinPostModal
           button.btn.btn-secondary(type="button", data-dismiss="modal") Cancel
           button#unpinPostButton.btn.btn-primary(type="button") Save
 
+mixin changeChatName(chat)
+  #changeChatNameModal.modal.fade(
+    tabindex="-1",
+    role="dialog",
+    aria-labelledby="changeChatNameModalLabel",
+    aria-hidden="true"
+  )
+    .modal-dialog(role="document")
+      .modal-content
+        .modal-header
+          h5#changeChatNameModalLabel.modal-title Change Name
+          button.close(type="button", data-dismiss="modal", aria-label="Close")
+            span(aria-hidden="true") &times;
+        .modal-body
+          input#chatNameInput(
+            type="text",
+            placeholder="Name...",
+            value=chat.name
+          )
+        .modal-footer
+          button.btn.btn-secondary(type="button", data-dismiss="modal") Cancel
+          button#changeChatNameButton.btn.btn-primary(type="button") Save
+
 mixin createPostModals(loggedInUser)
   +createReplyModal(loggedInUser)
   +deletePostModal 
@@ -145,3 +168,15 @@ mixin createTab(name, href, isSelected)
   - className = isSelected ? 'tab active' : 'tab';
   a(href=href, class=className)
     span #{name}
+
+mixin createChatImage(chatData, loggedInUser)
+  if (!chatData)
+    return
+
+  .chatImagesContainer
+    each user in chatData.users
+      img(
+        src=user.profilePhoto,
+        alt="Users's profile picture",
+        title=user.username
+      )

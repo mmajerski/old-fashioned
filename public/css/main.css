@@ -12,6 +12,14 @@
   font-family: "Lato", sans-serif;
 }
 
+html,
+body {
+  height: 100%;
+  min-height: 100%;
+  background-color: var(--whiteColor);
+  font-weight: 300;
+}
+
 h1 {
   font-size: 1.2rem;
   font-weight: 800;
@@ -62,6 +70,10 @@ nav a:hover {
 
 nav a i {
   color: var(--blackColor);
+}
+
+.wrapper {
+  overflow-x: hidden;
 }
 
 .mainSectionContainer {
@@ -417,4 +429,366 @@ nav a i {
   border-radius: 20px;
   background-color: var(--whiteColor);
   box-shadow: 2px 2px 10px 10px var(--blackColor);
+}
+
+.chatPageContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.chatTitleBar {
+  border-bottom: 1px solid var(--lightGreyBorder);
+  display: flex;
+  min-height: 60px;
+  padding: 10px;
+}
+
+.chatTitleBar label {
+  margin-right: 10px;
+}
+
+#userSearchTextbox {
+  border: none;
+  flex: 1;
+  font-weight: 200;
+  min-width: 350px;
+}
+
+#createChatButton {
+  border: none;
+  background-color: var(--lightBlack);
+  color: var(--hoverColor);
+  padding: 7px 20px;
+  margin: 10px auto;
+  border-radius: 40px;
+}
+
+#createChatButton:disabled {
+  background-color: #dedede;
+}
+
+.selectedUser {
+  font-weight: 300;
+  background-color: var(--hoverColor);
+  color: var(--lightBlack);
+  padding: 5px;
+  border-radius: 5px;
+  margin: 5px 5px 0 0;
+  display: inline-block;
+}
+
+.resultListItem {
+  padding: 7px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--lightGreyBorder);
+}
+
+.resultListItem:hover {
+  background-color: #f2f2f2;
+}
+
+.resultsDetailsContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.resultsDetailsContainer .heading {
+  font-weight: 500;
+}
+
+.resultsDetailsContainer .subtext {
+  color: var(--hoverColor);
+  font-size: 0.9rem;
+}
+
+.resultListItem img {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+}
+
+.resultsImageContainer {
+  height: 40px;
+  width: 40px;
+  position: relative;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.groupChatImage img {
+  height: 65%;
+  width: 65%;
+  position: absolute;
+  bottom: 0;
+  margin: 0;
+  border: 2px solid var(--whiteColor);
+}
+
+.groupChatImage img:first-of-type {
+  top: 0;
+  right: 0;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chatTitleContainer {
+  border-bottom: 1px solid var(--lightGreyBorder);
+  display: flex;
+  align-items: center;
+  padding: var(--spacing1remAll);
+}
+
+#chatName {
+  width: 100%;
+  padding: 0 5px;
+  cursor: pointer;
+}
+
+.chatContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+  height: 600px;
+}
+
+.chatContainer .messages {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: var(--spacing1remAll);
+  overflow-y: auto;
+}
+
+.chatContainer .footer {
+  display: flex;
+  padding: var(--spacing1remAll);
+  flex-shrink: 0px;
+}
+
+.chatContainer .footer textarea {
+  flex: 1;
+  resize: none;
+  background-color: #dedede;
+  border-radius: 18px;
+  border: none;
+  padding: 12px 12px;
+  height: 3rem;
+  overflow: hidden;
+}
+
+.chatContainer .footer button {
+  background-color: transparent;
+  color: var(--blackColor);
+  font-size: 1.5rem;
+}
+
+.chatImagesContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  min-width: 50%;
+  flex-wrap: wrap;
+  height: 100%;
+  margin-right: 10px;
+}
+
+.chatImagesContainer img {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  margin-left: -10px;
+}
+
+#chatNameInput {
+  width: 100%;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
+  background-color: var(--whiteColor);
+  box-shadow: 2px 2px 10px 10px var(--blackColor);
+}
+
+.messages .message {
+  padding-bottom: 2px;
+  list-style: none;
+  display: flex;
+  align-items: flex-end;
+  flex-shrink: 0;
+  margin-top: 30px;
+}
+
+.messages .message .messageContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 55%;
+}
+
+.messages .message .messageBody {
+  background-color: var(--lightGreyBorder);
+  padding: 6px 12px;
+  border-radius: 18px;
+  font-size: 0.9rem;
+}
+
+.messages .message.myMessage {
+  flex-direction: row-reverse;
+}
+
+.messages .message.myMessage .messageBody {
+  background-color: var(--blackColor);
+  color: var(--lightGreyBorder);
+}
+
+.messageTime {
+  color: #8f8a8a;
+  font-size: 0.8rem;
+}
+
+.messageAuthor {
+  margin: 0 5px;
+  font-size: 0.8rem;
+  color: #8f8a8a;
+  margin-bottom: -20px;
+}
+
+.messageAuthor img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.lds-roller {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-roller div {
+  animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  transform-origin: 40px 40px;
+}
+
+.lds-roller div:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--lightGreyBorder);
+  margin: -4px 0 0 -4px;
+}
+
+.lds-roller div:nth-child(1) {
+  animation-delay: -0.036s;
+}
+
+.lds-roller div:nth-child(1):after {
+  top: 63px;
+  left: 63px;
+}
+
+.lds-roller div:nth-child(2) {
+  animation-delay: -0.072s;
+}
+
+.lds-roller div:nth-child(2):after {
+  top: 68px;
+  left: 56px;
+}
+
+.lds-roller div:nth-child(3) {
+  animation-delay: -0.108s;
+}
+
+.lds-roller div:nth-child(3):after {
+  top: 71px;
+  left: 48px;
+}
+
+.lds-roller div:nth-child(4) {
+  animation-delay: -0.144s;
+}
+
+.lds-roller div:nth-child(4):after {
+  top: 72px;
+  left: 40px;
+}
+
+.lds-roller div:nth-child(5) {
+  animation-delay: -0.18s;
+}
+
+.lds-roller div:nth-child(5):after {
+  top: 71px;
+  left: 32px;
+}
+
+.lds-roller div:nth-child(6) {
+  animation-delay: -0.216s;
+}
+
+.lds-roller div:nth-child(6):after {
+  top: 68px;
+  left: 24px;
+}
+
+.lds-roller div:nth-child(7) {
+  animation-delay: -0.252s;
+}
+
+.lds-roller div:nth-child(7):after {
+  top: 63px;
+  left: 17px;
+}
+
+.lds-roller div:nth-child(8) {
+  animation-delay: -0.288s;
+}
+
+.lds-roller div:nth-child(8):after {
+  top: 56px;
+  left: 12px;
+}
+
+@keyframes lds-roller {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loaderContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.typingGif {
+  padding: 0 var(--spacing1remAll);
+  display: none;
+}
+
+.typingGif img {
+  height: 35px;
+}
+
+#usernameP {
+  font-size: 0.8rem;
+  color: var(--hoverColor);
 }

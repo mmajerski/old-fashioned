@@ -65,6 +65,7 @@ html(lang="en")
         .mainSectionContainer.col-10.col-md-5
           .titleContainer
             h1 #{pageTitle}
+            block headerButton
           block content
         .col-2
           span third column
@@ -84,6 +85,7 @@ html(lang="en")
       integrity="sha512-9pGiHYK23sqK5Zm0oF45sNBAX/JqbZEP7bSDHyt+nT3GddF+VFIcYNqREt0GDpmFVZI3LZ17Zu9nMMc9iktkCw==",
       crossorigin="anonymous"
     )
+    script(src="/socket.io/socket.io.js")
 
     //- <!--
     //- The integrity and crossorigin attributes are used for Subresource Integrity (SRI) checking. 
@@ -93,3 +95,4 @@ html(lang="en")
     block scripts
 
     script(src="/js/common.js")
+    script(src="/js/clientSocket.js")

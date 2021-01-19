@@ -10,10 +10,13 @@ const registerRoute = require("./src/routes/registerRoutes");
 const logoutRoute = require("./src/routes/logoutRoutes");
 const posts = require("./src/routes/api/posts");
 const users = require("./src/routes/api/users");
+const chats = require("./src/routes/api/chats");
+const messages = require("./src/routes/api/messages");
 const postRoutes = require("./src/routes/postRoute");
 const profileRoutes = require("./src/routes/profileRoutes");
 const uploadRoutes = require("./src/routes/uploadRoutes");
 const searchRoutes = require("./src/routes/searchRoutes");
+const messagesRoutes = require("./src/routes/messagesRoutes");
 
 const { connectMongoDb } = require("./src/utils/connectMongo");
 
@@ -42,12 +45,17 @@ app.use("/post", requireLogin, postRoutes);
 app.use("/profile", requireLogin, profileRoutes);
 app.use("/uploads", requireLogin, uploadRoutes);
 app.use("/search", requireLogin, searchRoutes);
+app.use("/messages", requireLogin, messagesRoutes);
 app.use("/api/posts", posts);
 app.use("/api/users", users);
+app.use("/api/chats", chats);
+app.use("/api/messages", messages);
 
 const server = app.listen(port, () =>
   console.log("Server is up on port " + port)
 );
+
+const io = require("socket.io")(server, { pingTimeout: 60000 });
 
 app.get("/", requireLogin, (req, res) => {
   const payload = {
@@ -57,4 +65,39 @@ app.get("/", requireLogin, (req, res) => {
   };
 
   res.render("main", payload);
+});
+
+io.on("connection", (socket) => {
+  socket.on("setup", (userData) => {
+    socket.join(userData._id);
+    socket.emit("connected");
+  });
+
+  socket.on("join room", (room) => {
+    socket.join(room);
+  });
+
+  socket.on("userTyping", (room, user) => {
+    socket.in(room).emit("typing", user);
+  });
+
+  socket.on("stopTyping", (room) => {
+    socket.in(room).emit("stopTyping");
+  });
+
+  socket.on("newMessage", (message) => {
+    const chat = message.chat;
+
+    if (!chat.users) {
+      return;
+    }
+
+    chat.users.forEach((user) => {
+      if (user._id == message.sender._id) {
+        return;
+      }
+
+      socket.in(user._id).emit("messageReceived", message);
+    });
+  });
 });

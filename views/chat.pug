@@ -1,0 +1,35 @@
+extends shared/main-shared.pug
+
+block content
+  script.
+    const chatId = '!{chat._id}';
+  
+  .chatPageContainer
+    .chatTitleContainer
+      +createChatImage(chat, loggedInUser)
+      span#chatName(data-toggle="modal", data-target="#changeChatNameModal") #{chat.name ? chat.name : "Chat Name"}
+
+    .mainContentContainer
+      .loaderContainer
+        .lds-roller
+          div
+          div
+          div
+          div
+          div
+          div
+          div
+          div
+      .chatContainer(style="visibility: hidden")
+        ul.messages
+        .typingGif
+          img(src="/images/typing.gif", alt="Typing effect")
+          span#usernameP 
+        .footer
+          textarea.inputText(name="messageInput", placeholder="Message...")
+          button.sendMessageButton
+            i.fas.fa-share-square
+  +changeChatName(chat)
+
+block scripts
+  script(src="/js/chat.js")
