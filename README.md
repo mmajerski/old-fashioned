@@ -1,6 +1,6 @@
 ### Social-like app
 
-This was created during my experiments with jQuery and pug templates:). Although it looks very straightforward I'm going to enhanced it in the future.
+This was created during my experiments with jQuery and pug templates:). Although it looks very straightforward I'm going to enhance it in the future.
 
 ##
 
